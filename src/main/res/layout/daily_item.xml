@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="15dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/daily_routineName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="routine_name"
+        android:textSize="40sp"/>
+
+    <TextView
+        android:id="@+id/daily_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="time"/>
+
+    <TextView
+        android:id="@+id/daily_weekday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="weekday"
+        android:layout_marginBottom="20dp"
+        android:textSize="20sp"/>
+
+</LinearLayout>
