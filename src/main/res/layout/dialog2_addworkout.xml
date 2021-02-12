@@ -1,46 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/popup_routine"
+        android:id="@+id/addWorkoutName2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="운동 이름"
         android:layout_margin="20dp"
-        android:hint="등록 할 루틴 이름을 입력하세요"
-        android:gravity="center"/>
-    <EditText
-        android:id="@+id/popup_startDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="시작 할 날자(yyyy-mm-dd)"
-        android:gravity="center"/>
-    <EditText
-        android:id="@+id/popup_endDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:hint="종료 할 날자(yyyy-mm-dd)"
-        android:gravity="center"/>
+        android:padding="20dp"/>
+
 
     <EditText
-        android:id="@+id/popup_weekday"
+        android:id="@+id/addWorkoutWeight2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="무게"
+        android:inputType="number"
         android:layout_margin="20dp"
-        android:hint="weekday"
-        android:gravity="center"/>
+        android:padding="20dp"/>
 
-    <Spinner
-        android:id="@+id/weekdaySpinner"
+    <EditText
+        android:id="@+id/addWorkoutRep2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="반복"
+        android:inputType="number"
         android:layout_margin="20dp"
-        android:gravity="center"/>
+        android:padding="20dp"/>
+
+    <EditText
+        android:id="@+id/addWorkoutSets2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:hint="세트"
+        android:inputType="number"
+        android:layout_margin="20dp"
+        android:padding="20dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -49,16 +51,16 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/popup_cancel"
-            android:layout_marginHorizontal="20dp"
+            android:id="@+id/dialog_workout_cancelButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             android:text="취소"/>
         <Button
-            android:id="@+id/popup_submit"
-            android:layout_marginHorizontal="20dp"
+            android:id="@+id/dialog_workout_addButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
             android:text="등록"/>
 
     </LinearLayout>

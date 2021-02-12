@@ -8,32 +8,20 @@
     android:layout_height="match_parent"
     tools:context=".WorkoutSpecific">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/workoutUpdateButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="업데이트"/>
-        <Button
             android:id="@+id/workoutDeleteButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentEnd="true"
             android:text="제거"/>
-        <Button
-            android:id="@+id/workoutChangeButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="수정"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:padding="20dp"

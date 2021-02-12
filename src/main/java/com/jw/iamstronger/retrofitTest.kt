@@ -35,7 +35,7 @@ interface retrofitTest {
 
     @GET("daily-routines/{day}")
     fun getDailyRoutine(
-        @Path("day") day: String
+        @Path("day") day: String = "Thu"
     ): Call<ArrayList<Routine_ALL>>
 
 
@@ -79,12 +79,11 @@ interface retrofitTest {
     ): Call<Workout>
 
 
-    @FormUrlEncoded
     @PUT("routines/{routine_id}/workouts/{workout_id}")
     fun putWorkoutDetail(
         @Path("routine_id") id1: Int,
         @Path("workout_id") id2: Int,
-        @FieldMap options: Map<String, String>
+        @Body workout: Workout
     ): Call<Workout>
 
 
@@ -93,6 +92,7 @@ interface retrofitTest {
         @Path("routine_id") id1: Int,
         @Path("workout_id") id2: Int
     ): Call<Void>
+
 
     @GET("newday")
     fun getDaystart(): Call<Void>

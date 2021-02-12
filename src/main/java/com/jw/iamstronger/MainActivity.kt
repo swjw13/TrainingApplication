@@ -10,11 +10,10 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.view.Window
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.jw.iamstronger.Classes.Main
 import com.jw.iamstronger.Classes.Routine
 import com.jw.iamstronger.Classes.Routine_ALL
@@ -31,37 +30,46 @@ class MainActivity : AppCompatActivity() {
     lateinit private var dailyButton: Button
     lateinit private var addButton: Button
 
-    lateinit private var dialog: Dialog
+
     private lateinit var alarmManager: AlarmManager
+    private lateinit var navView: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        initview(this@MainActivity)
-
-        completedRoutine.setOnClickListener {
-            val intent = Intent(this, CompletedRoutine::class.java)
-            startActivity(intent)
-        }
-
-        addButton.setOnClickListener {
-            showDialog()
-        }
-
-        dailyButton.setOnClickListener {
-            val intent = Intent(this, DailyRoutine::class.java)
-            startActivity(intent)
-        }
-        findViewById<Button>(R.id.getAllRoutineButton).setOnClickListener {
-            startActivity(Intent(this, AllRoutine::class.java))
-        }
-
         setDailyStart()
+
+        val f1 = frag1()
+        val f2 = frag2()
+        val f3 = frag3()
+
+        navView = findViewById(R.id.mainNavView)
+        navView.setOnNavigationItemSelectedListener(object: BottomNavigationView.OnNavigationItemSelectedListener{
+            override fun onNavigationItemSelected(item: MenuItem): Boolean {
+                when(item.itemId){
+                    R.id.action_btn1 ->{
+                        supportFragmentManager.beginTransaction().replace(R.id.usercontainer, f1).commit()
+                        return true
+                    }
+                    R.id.action_btn2 -> {
+                        supportFragmentManager.beginTransaction().replace(R.id.usercontainer, f2).commit()
+                        return true
+                    }
+                    R.id.action_btn3 -> {
+                        supportFragmentManager.beginTransaction().replace(R.id.usercontainer, f3).commit()
+                        return true
+                    }
+                }
+                return false
+            }
+        })
+
+        supportFragmentManager.beginTransaction().replace(R.id.usercontainer, f2).commit()
 
     }
 
-    private fun setDailyStart(){
+    private fun setDailyStart() {
         alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         val intent = Intent(this, BroadCast::class.java)
@@ -73,47 +81,13 @@ class MainActivity : AppCompatActivity() {
         calendar.set(Calendar.SECOND, 0)
         calendar.set(Calendar.MILLISECOND, 0)
 
-        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, INTERVAL_DAY, pIntent)
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            calendar.timeInMillis,
+            INTERVAL_DAY,
+            pIntent
+        )
 
     }
 
-    private fun showDialog(){
-        dialog = Dialog(this@MainActivity)
-        dialog.setContentView(R.layout.dialog_addroutine)
-        dialog.show()
-
-        dialog.findViewById<Button>(R.id.popup_cancel).setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.findViewById<Button>(R.id.popup_submit).setOnClickListener {
-            val routine_name = dialog.findViewById<EditText>(R.id.popup_routine).text.toString()
-            val routine_startDate = dialog.findViewById<EditText>(R.id.popup_startDate).text.toString()
-            val routine_endDate = dialog.findViewById<EditText>(R.id.popup_endDate).text.toString()
-            val routine_week = dialog.findViewById<EditText>(R.id.popup_weekday).text.toString()
-
-            val userId = getSharedPreferences("user", Context.MODE_PRIVATE).getString("loginId", "null")
-            Log.d("loginId", userId!!)
-            val madeRoutine = Routine(userId, routine_name, routine_startDate, routine_endDate, arrayListOf(), routine_week, false)
-
-            (application as GlobalApplication).service.postRoutines(madeRoutine)
-                .enqueue(object: Callback<Routine_ALL>{
-                override fun onFailure(call: Call<Routine_ALL>, t: Throwable) {
-                    Toast.makeText(this@MainActivity, "등록에 실패하셨습니다!",Toast.LENGTH_SHORT).show()
-                }
-
-                override fun onResponse(call: Call<Routine_ALL>, response: Response<Routine_ALL>) {
-                    if(response.isSuccessful){
-                        Toast.makeText(this@MainActivity, "등록에 성공하셨습니다!" + userId,Toast.LENGTH_SHORT).show()
-                        dialog.dismiss()
-                    }
-                }
-            })
-        }
-    }
-
-    private fun initview(activity: Activity){
-        completedRoutine = activity.findViewById(R.id.getCompletedRoutine)
-        dailyButton = activity.findViewById(R.id.getDailyRoutine)
-        addButton = activity.findViewById(R.id.addRoutine)
-    }
 }

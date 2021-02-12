@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="15dp"
+    android:layout_margin="15dp"
+    tools:context=".addRoutineActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="루틴 이름?"/>
+
+        <EditText
+            android:id="@+id/routineName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="routine_name"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="시작 날짜"/>
+
+        <EditText
+            android:id="@+id/routineStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:hint="startDate"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="종료 날짜"/>
+
+        <EditText
+            android:id="@+id/routineEndDate"
+            android:layout_width="match_parent"
+            android:inputType="date"
+            android:layout_height="wrap_content"
+            android:hint="endDate"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="가능 요일"/>
+        <ListView
+            android:id="@+id/routineWeekdayList"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:choiceMode="multipleChoice"/>
+
+        <Button
+            android:id="@+id/addRoutineButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="루틴 추가"
+            android:layout_margin="30dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

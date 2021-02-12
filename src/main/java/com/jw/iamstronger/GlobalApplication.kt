@@ -27,12 +27,6 @@ class GlobalApplication: Application() {
                 val token = getUserToken()
                 val request = original.newBuilder().header("Authorization", "Token " + token).build()
                 it.proceed(request)
-//                getUserToken()?.let{token ->
-//                    val request = original.newBuilder()
-//                            .header("Authorization","token " + token )
-//                            .build()
-//                    it.proceed(request)
-//                }
             } else{
                 it.proceed(original)
             }

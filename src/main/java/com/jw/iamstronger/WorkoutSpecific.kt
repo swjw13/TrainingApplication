@@ -3,6 +3,7 @@ package com.jw.iamstronger
 import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -29,19 +30,19 @@ class WorkoutSpecific : AppCompatActivity() {
         routine_id = intent.getIntExtra("routine_id", 0)
         workout_id = intent.getIntExtra("workout_id", 0)
 
-        getWorkout()
-
-        binding.workoutUpdateButton.setOnClickListener {
-            getWorkout()
-        }
         binding.workoutDeleteButton.setOnClickListener {
             delWorkout()
         }
-        addClick()
 
+        addClick()
     }
 
-    private fun addClick(){
+    override fun onResume() {
+        super.onResume()
+        getWorkout()
+    }
+
+    private fun addClick() {
         binding.workoutName.setOnClickListener {
             changeWorkout("workout_name")
         }
@@ -56,19 +57,34 @@ class WorkoutSpecific : AppCompatActivity() {
         }
     }
 
-    private fun changeWorkout(key: String){
+    private fun changeWorkout(key: String) {
         dialog = Dialog(this@WorkoutSpecific)
         dialog.setContentView(R.layout.dialog_changeroutine)
         dialog.show()
+        if(key != "workout_name"){
+            dialog.findViewById<EditText>(R.id.changeRoutineEditText).inputType = InputType.TYPE_CLASS_NUMBER
+        } else{
+            dialog.findViewById<EditText>(R.id.changeRoutineEditText).inputType = InputType.TYPE_CLASS_TEXT
+        }
 
         dialog.findViewById<Button>(R.id.changeRoutineCancelButton).setOnClickListener {
             dialog.dismiss()
         }
         dialog.findViewById<Button>(R.id.changeRoutineSubmitButton).setOnClickListener {
             val value = dialog.findViewById<EditText>(R.id.changeRoutineEditText).text.toString()
-            val map = mapOf(key to value)
 
-            (application as GlobalApplication).service.putWorkoutDetail(routine_id!!, workout_id!!, map).enqueue(object: Callback<Workout>{
+            when (key) {
+                "workout_name" -> base?.workout_name = value
+                "weight" -> base?.weight = value.toInt()
+                "repetition" -> base?.repetition = value.toInt()
+                "sets" -> base?.sets = value.toInt()
+            }
+
+            (application as GlobalApplication).service.putWorkoutDetail(
+                routine_id!!,
+                workout_id!!,
+                base!!
+            ).enqueue(object : Callback<Workout> {
                 override fun onFailure(call: Call<Workout>, t: Throwable) {
 
                 }
@@ -76,46 +92,52 @@ class WorkoutSpecific : AppCompatActivity() {
                 override fun onResponse(call: Call<Workout>, response: Response<Workout>) {
                     if (response.isSuccessful) {
                         Toast.makeText(this@WorkoutSpecific, "통신 성공", Toast.LENGTH_SHORT).show()
-                        setView(response.body())
+                        response.body()?.apply {
+                            base = this
+                        }
+                        setView()
                     }
                 }
             })
+            dialog.dismiss()
         }
     }
 
     private fun delWorkout() {
-        (application as GlobalApplication).service.delWorkoutDetail(routine_id!!, workout_id!!).enqueue(object: Callback<Void>{
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-            }
+        (application as GlobalApplication).service.delWorkoutDetail(routine_id!!, workout_id!!)
+            .enqueue(object : Callback<Void> {
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                }
 
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                Toast.makeText(this@WorkoutSpecific, "삭제 성공", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        })
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    Toast.makeText(this@WorkoutSpecific, "삭제 성공", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            })
     }
 
-    private fun getWorkout(){
-        (application as GlobalApplication).service.getWorkoutDetail(routine_id!!, workout_id!!).enqueue(object: Callback<Workout>{
-            override fun onFailure(call: Call<Workout>, t: Throwable) {
-                Toast.makeText(this@WorkoutSpecific, "workout가져오기 실패", Toast.LENGTH_SHORT).show()
-            }
+    private fun getWorkout() {
+        (application as GlobalApplication).service.getWorkoutDetail(routine_id!!, workout_id!!)
+            .enqueue(object : Callback<Workout> {
+                override fun onFailure(call: Call<Workout>, t: Throwable) {
+                    Toast.makeText(this@WorkoutSpecific, "workout가져오기 실패", Toast.LENGTH_SHORT)
+                        .show()
+                }
 
-            override fun onResponse(call: Call<Workout>, response: Response<Workout>) {
-                Toast.makeText(this@WorkoutSpecific, "workout가져오기 성공", Toast.LENGTH_SHORT).show()
-                base = response.body()
-                setView(base)
-            }
-        })
+                override fun onResponse(call: Call<Workout>, response: Response<Workout>) {
+                    Toast.makeText(this@WorkoutSpecific, "workout가져오기 성공", Toast.LENGTH_SHORT)
+                        .show()
+                    base = response.body()
+                    setView()
+                }
+            })
     }
 
-    private fun setView(v: Workout?){
-        if(v != null){
-            binding.workoutName.text = v.workout_name
-            binding.workoutWeight.text = v.weight.toString()
-            binding.workoutRep.text = v.repitition.toString()
-            binding.workoutSet.text = v.sets.toString()
-        }
+    private fun setView() {
+        binding.workoutName.text = base?.workout_name
+        binding.workoutWeight.text = base?.weight.toString()
+        binding.workoutRep.text = base?.repetition.toString()
+        binding.workoutSet.text = base?.sets.toString()
     }
 
 }

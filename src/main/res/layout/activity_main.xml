@@ -5,52 +5,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:gravity="center"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextClock
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:format12Hour="hh:mm a"
-        android:format24Hour="hh:mm" />
-
-    <TextView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/mainNavView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="어떤 것을 하시겠습니까?"
-        android:gravity="center"
-        android:textSize="30sp"/>
+        app:itemTextColor="#ffffff"
+        app:menu="@menu/menu"
+        android:background="#0000ff"/>
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/usercontainer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <Button
-            android:id="@+id/getCompletedRoutine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="완료된 목록 보기"/>
-        <Button
-            android:id="@+id/getDailyRoutine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="오늘 할 일 보기"/>
-        <Button
-            android:id="@+id/addRoutine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="할 일 등록하기"/>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/getAllRoutineButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="모든 루틴 보기"/>
 </LinearLayout>

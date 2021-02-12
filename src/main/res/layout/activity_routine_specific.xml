@@ -8,14 +8,59 @@
     android:layout_height="match_parent"
     tools:context=".RoutineSpecific">
 
-    <TextView
-        android:id="@+id/specificRoutineName"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="루틴 이름"
-        android:textSize="40sp"
-        android:layout_margin="20dp"
-        android:gravity="center"/>
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/specificRoutineName"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="루틴 이름"
+            android:textSize="20sp"
+            android:layout_margin="20dp"
+            android:gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/routine_startDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="null"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/routine_endDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="null"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+            <TextView
+                android:id="@+id/routine_weekday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1900.01.01"
+                android:gravity="center"
+                android:layout_margin="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/workoutListView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,121 +73,23 @@
             android:id="@+id/routine_change"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
             android:text="루틴 삭제"/>
 
+
         <Button
-            android:id="@+id/updateRoutine"
+            android:id="@+id/routineCompleteButton"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="20dp"
-            android:text="업데이트"/>
+            android:layout_height="wrap_content"
+            android:text="루틴 완료!" />
+
+        <Button
+            android:id="@+id/workoutAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가"/>
+
     </LinearLayout>
 
-    <ScrollView
-        android:padding="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_marginBottom="30dp">
-
-                <TextView
-                    android:id="@+id/startDateText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="시작 날짜"
-                    android:textSize="30sp"/>
-                <TextView
-                    android:id="@+id/specificStartDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020-11-10"
-                    android:textSize="25sp"
-                    android:layout_below="@+id/startDateText"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_marginBottom="30dp">
-
-                <TextView
-                    android:id="@+id/endDateText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="종료 날짜"
-                    android:textSize="30sp"/>
-                <TextView
-                    android:id="@+id/specificEndDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2021-01-10"
-                    android:textSize="25sp"
-                    android:layout_below="@+id/endDateText"
-                    android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/routineDetailWorkout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_marginBottom="30dp">
-
-                <TextView
-                    android:id="@+id/workoutText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="workout"
-                    android:textSize="30sp"/>
-                <TextView
-                    android:id="@+id/specificWorkout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2020-11-10"
-                    android:textSize="25sp"
-                    android:layout_below="@+id/workoutText"
-                    android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_marginBottom="30dp">
-
-                <TextView
-                    android:id="@+id/weekdayText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="요일"
-                    android:textSize="30sp"/>
-                <TextView
-                    android:id="@+id/specificWeekday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MonTue"
-                    android:textSize="25sp"
-                    android:layout_below="@+id/weekdayText"
-                    android:layout_alignParentEnd="true"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
 
 </LinearLayout>
